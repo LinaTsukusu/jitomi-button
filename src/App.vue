@@ -28,13 +28,6 @@
     v-content
       v-container(fluid)
         router-view
-  //-
-    v-footer.elevation-2(
-      app
-      fixed
-    )
-      player-footer
-
 </template>
 
 <script lang="ts">
