@@ -22,10 +22,7 @@
           v-btn(href="/" text)
             v-avatar.mr-4
               img(src="https://yt3.ggpht.com/a/AATXAJwoUsObTqH2d8fktgaDE5EoiR8KVJM1qi0O6w=s288-c-k-c0xffffffff-no-rj-mo")
-            v-toolbar-title.d-none.d-lg-block Jitomi Button 🧲
-      v-col.mt-6(md="6" offset-md="1")
-        v-toolbar-items
-          v-text-field(label="Search" append-icon="mdi-magnify")
+            v-toolbar-title Jitomi Button 🧲
     v-content
       v-container(fluid)
         router-view

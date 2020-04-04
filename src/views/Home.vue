@@ -1,6 +1,9 @@
 <template lang="pug">
   #home
     v-row
+      v-col(md="6" offset-md="3")
+        v-text-field(label="Search" append-icon="mdi-magnify")
+    v-row
       v-col(offset-md="1" md="10")
         v-btn.ma-1(color="primary" v-for="d in voiceDataList" @click="playVoice(d)") {{d.title}}
     v-footer(absolute)
