@@ -3,9 +3,9 @@
     v-row
       v-col.text-center
         span.display-1(v-if ="this.voiceData") {{this.voiceData.title}}
-        v-btn(text small :href="this.voiceData.archiveUrl" target="_blank" v-if ="this.voiceData")
+        v-btn(text :href="this.voiceData.archiveUrl" target="_blank" v-if ="this.voiceData")
           v-icon(left) mdi-launch
-          span {{this.voiceData.archiveUrl}}
+          span 元配信
       v-col.d-none.d-md-block(v-if ="this.voiceData")
         v-chip.tag.ml-1.mb-1(v-for="row of this.voiceData.tags") {{row}}
       v-col(v-else)

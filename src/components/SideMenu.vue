@@ -5,7 +5,7 @@
         v-list-item-avatar
           img(src="https://yt3.ggpht.com/a/AATXAJwoUsObTqH2d8fktgaDE5EoiR8KVJM1qi0O6w=s288-c-k-c0xffffffff-no-rj-mo")
         v-list-item-content
-          v-list-item-title.title 磁富モノエ
+          v-list-item-title.headline 磁富モノエ
           v-list-item-subtitle Jitomi Monoe
       v-list-item(link dense href="https://www.youtube.com/channel/UCaFhsCKSSS821N-EcWmPkUQ" target="_blank")
         v-list-item-icon
@@ -27,6 +27,23 @@
           v-icon mdi-tag
         v-list-item-content
           v-list-item-title #磁っとみないで
+      v-divider
+      v-list-item
+        v-list-item-avatar
+          img(src="https://pbs.twimg.com/profile_images/848252739058450432/IwpE7Qng_400x400.jpg")
+        v-list-item-content
+          v-list-item-title GYARI
+          v-list-item-subtitle 著作権保持者
+      v-list-item(link dense href="http://www.gyari.com/" target="_blank")
+        v-list-item-icon
+          v-icon mdi-home
+        v-list-item-content
+          v-list-item-title GYARISUTA!
+      v-list-item(link dense href="https://twitter.com/GYARI_" target="_blank")
+        v-list-item-icon
+          v-icon mdi-twitter
+        v-list-item-content
+          v-list-item-title Twitter
       v-divider
       v-list-item
         v-list-item-content
