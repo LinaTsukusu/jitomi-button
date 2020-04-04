@@ -6,14 +6,16 @@
         v-btn(text small :href="this.voiceData.archiveUrl" target="_blank" v-if ="this.voiceData")
           v-icon(left) mdi-launch
           span {{this.voiceData.archiveUrl}}
-      v-col(v-if ="this.voiceData")
+      v-col.d-none.d-md-block(v-if ="this.voiceData")
         v-chip.tag.ml-1.mb-1(v-for="row of this.voiceData.tags") {{row}}
       v-col(v-else)
-      v-col.text-center(align-self="center")
+      v-col.text-center(align-self="center" md="1")
         v-btn(v-if="!isPlaying" @click="playVoice" fab x-large color="primary" :disabled="isBtnDisabled")
           v-icon(x-large) mdi-play
         v-btn(v-else @click="stopVoice" fab x-large color="primary" :disabled="isBtnDisabled")
           v-icon(x-large) mdi-stop
+      v-col(align-self="end" md="2")
+        v-slider(v-model="volume" min="0" max="1" step="0.01" color="primary" append-icon="mdi-volume-high" prepend-icon="mdi-volume-low")
 </template>
 
 <script lang="ts">
@@ -26,11 +28,13 @@
     private audio: HTMLAudioElement | null = null
 
     private voiceData: VoiceData | null = null
+    private volume = 0.5
 
     public playVoice(voiceData: VoiceData) {
       this.isBtnDisabled = false
       this.voiceData = voiceData
       this.audio = new Audio(voiceData.voiceUrl)
+      this.audio.volume = this.volume
       this.audio.addEventListener('ended', () => {
         this.isPlaying = false
       })
