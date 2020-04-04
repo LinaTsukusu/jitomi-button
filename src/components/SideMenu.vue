@@ -17,6 +17,16 @@
           v-icon mdi-twitter
         v-list-item-content
           v-list-item-title Twitter
+      v-list-item(link dense href="https://twitter.com/hashtag/%E7%A3%81%E3%81%A3%E3%81%A8%E3%81%BF%E3%81%A6?src=hashtag_click&f=live" target="_blank")
+        v-list-item-icon
+          v-icon mdi-tag
+        v-list-item-content
+          v-list-item-title #磁っとみて
+      v-list-item(link dense href="https://twitter.com/hashtag/%E7%A3%81%E3%81%A3%E3%81%A8%E3%81%BF%E3%81%AA%E3%81%84%E3%81%A7?src=hashtag_click&f=live" target="_blank")
+        v-list-item-icon
+          v-icon mdi-tag
+        v-list-item-content
+          v-list-item-title #磁っとみないで
       v-divider
       v-list-item
         v-list-item-content
