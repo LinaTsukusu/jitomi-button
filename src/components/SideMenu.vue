@@ -69,6 +69,13 @@
           v-icon mdi-git
         v-list-item-content
           v-list-item-title GitHub
+      v-divider
+      v-list-item(link dense to="/manage")
+        v-list-item-icon
+          v-icon mdi-cog
+        v-list-item-content
+          v-list-item-title Staff Only
+
 </template>
 
 <script lang="ts">
