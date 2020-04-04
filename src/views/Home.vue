@@ -1,17 +1,41 @@
-<template>
-  <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<template lang="pug">
+  #home
+    v-row
+      v-col(offset-md="1" md="10")
+        v-btn.ma-1(color="primary" v-for="d in voiceDataList" @click="playVoice(d)") {{d.title}}
+    v-footer(absolute)
+      player-footer(ref="player")
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+<script lang="ts">
+  import {Component, Vue} from 'vue-property-decorator'
+  import * as firebase from "firebase/app"
+  import "firebase/firestore"
+  import "firebase/storage"
+  import PlayerFooter from '@/components/PlayerFooter.vue'
 
-export default {
-  name: 'Home',
-  components: {
-    HelloWorld
+  const db = firebase.firestore()
+  const storage = firebase.storage()
+  @Component({
+    components: {PlayerFooter},
+  })
+  export default class Home extends Vue {
+    private voiceDataList: VoiceData[] = []
+    private voiceData: VoiceData | null = null
+
+    private mounted() {
+      db.collection('voices')
+        .orderBy('ruby')
+        .orderBy('index')
+        .get()
+        .then((snap) => {
+          this.voiceDataList = snap.docs.map((doc) => doc.data()) as VoiceData[]
+    })
+    }
+
+    private playVoice(voiceData: VoiceData) {
+      const player = this.$refs.player as PlayerFooter
+      player.playVoice(voiceData)
+    }
   }
-}
 </script>

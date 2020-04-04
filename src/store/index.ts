@@ -3,10 +3,15 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+const state: {voiceData?: VoiceData} = {
+}
+
 export default new Vuex.Store({
-  state: {
-  },
+  state,
   mutations: {
+    setVoiceData: (state, payload) => {
+      state.voiceData = payload
+    }
   },
   actions: {
   },

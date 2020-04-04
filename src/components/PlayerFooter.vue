@@ -1,29 +1,50 @@
 <template lang="pug">
   v-container#player-footer(fluid)
     v-row
-      v-col.col-4
-        span.display-1 test
-        br
-        v-btn(text small)
+      v-col.text-center
+        span.display-1(v-if ="this.voiceData") {{this.voiceData.title}}
+        v-btn(text small :href="this.voiceData.archiveUrl" target="_blank" v-if ="this.voiceData")
           v-icon(left) mdi-launch
-          span https://jfewajfioejwafja.comfejaoifjeaoijf...
-      v-col.col-5
-        v-chip.tag.ml-1.mb-1(v-for="row of ['Tag1']") {{row}}
+          span {{this.voiceData.archiveUrl}}
+      v-col(v-if ="this.voiceData")
+        v-chip.tag.ml-1.mb-1(v-for="row of this.voiceData.tags") {{row}}
+      v-col(v-else)
       v-col.text-center(align-self="center")
-        v-btn(fab x-large color="primary" :disabled="isBtnDisabled")
-          v-icon(v-if="!isPlaying") mdi-play
-          v-icon(v-else) mdi-stop
+        v-btn(v-if="!isPlaying" @click="playVoice" fab x-large color="primary" :disabled="isBtnDisabled")
+          v-icon(x-large) mdi-play
+        v-btn(v-else @click="stopVoice" fab x-large color="primary" :disabled="isBtnDisabled")
+          v-icon(x-large) mdi-stop
 </template>
 
 <script lang="ts">
-  import {Component, Vue} from 'vue-property-decorator'
-  
-  
+  import {Component, Prop, Vue, Watch} from 'vue-property-decorator'
+
   @Component
   export default class PlayerFooter extends Vue {
-    private isBtnDisabled = false
+    private isBtnDisabled = true
     private isPlaying = false
+    private audio: HTMLAudioElement | null = null
 
+    private voiceData: VoiceData | null = null
+
+    public playVoice(voiceData: VoiceData) {
+      this.isBtnDisabled = false
+      this.voiceData = voiceData
+      this.audio = new Audio(voiceData.voiceUrl)
+      this.audio.addEventListener('ended', () => {
+        this.isPlaying = false
+      })
+      this.isPlaying = true
+      this.audio.play().then()
+    }
+
+    private stopVoice() {
+      if (this.audio) {
+        this.audio.pause()
+        this.audio.currentTime = 0
+        this.isPlaying = false
+      }
+    }
   }
 </script>
 
