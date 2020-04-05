@@ -14,11 +14,9 @@
   import {Component, Vue} from 'vue-property-decorator'
   import * as firebase from "firebase/app"
   import "firebase/firestore"
-  import "firebase/storage"
   import PlayerFooter from '@/components/PlayerFooter.vue'
 
   const db = firebase.firestore()
-  const storage = firebase.storage()
   @Component({
     components: {PlayerFooter},
   })

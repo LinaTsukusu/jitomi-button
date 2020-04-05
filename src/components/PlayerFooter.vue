@@ -10,7 +10,7 @@
         v-chip.tag.ml-1.mb-1(v-for="row of this.voiceData.tags") {{row}}
       v-col(v-else)
       v-col.text-center(align-self="center" md="1")
-        v-btn(v-if="!isPlaying" @click="playVoice" fab x-large color="primary" :disabled="isBtnDisabled")
+        v-btn(v-if="!isPlaying" @click="playVoice(voiceData)" fab x-large color="primary" :disabled="isBtnDisabled")
           v-icon(x-large) mdi-play
         v-btn(v-else @click="stopVoice" fab x-large color="primary" :disabled="isBtnDisabled")
           v-icon(x-large) mdi-stop
