@@ -26,7 +26,7 @@
     v-content
       v-container(fluid)
         router-view
-    v-snackbar(v-model="showAlert" :color="alertColor" timeout="10000" top) {{alertMessage}}
+    v-snackbar(v-model="showAlert" :color="alertColor" :timeout="10000" top) {{alertMessage}}
       v-btn(text @click="showAlert = false") close
 </template>
 

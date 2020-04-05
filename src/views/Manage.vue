@@ -15,6 +15,9 @@
             v-card-title Voices List
               v-spacer
               v-text-field(v-model="search" append-icon="mdi-magnify" label="Search" single-line clearable)
+              v-spacer
+              v-btn(fab color="error")
+                v-icon mdi-delete
           template(v-slot:item.tags="{value}")
             v-chip.mr-1(v-for="tag in value" @click.stop="search = tag") {{tag}}
           template(v-slot:item.voiceUrl="{value}")
@@ -25,11 +28,11 @@
               v-icon mdi-launch
     v-btn#add-button(@click="addDialog = true" fixed bottom fab right x-large color="primary")
       v-icon mdi-plus
-    v-dialog(v-model="addDialog")
-      upload
-    v-dialog(v-model="editDialog")
-      edit
-    v-dialog(v-model="loginDialog" persistent max-width="400")
+    v-dialog(v-model="addDialog" max-width="1200")
+      upload(@close="addDialog = false" @add="add")
+    v-dialog(v-model="editDialog" max-width="1200")
+      edit(:value="editData"  @close="editDialog = false" @play="playVoice" @update="update")
+    v-dialog(v-model="loginDialog" persistent width="400")
       login
 </template>
 
@@ -64,7 +67,6 @@
     private editData: VoiceData | null = null
 
     private mounted() {
-      // firebase.auth().signOut()
       firebase.auth().onAuthStateChanged((user) => {
         if (!user) {
           this.loginDialog = true
@@ -80,11 +82,15 @@
               return db.collection('voices')
                 .orderBy('ruby')
                 .orderBy('index')
-                .get()
-            })
-            .then((snap) => {
-              this.voiceDataList = snap.docs.map((v) => v.data() as VoiceData)
-              this.isLoading = false
+                .onSnapshot((snap) => {
+                  this.isLoading = true
+                  this.voiceDataList = snap.docs.map((v) => {
+                    const ret = v.data() as VoiceData & { id: string }
+                    ret.id = v.id
+                    return ret
+                  })
+                  this.isLoading = false
+                })
             })
             .catch((err) => {
               this.$store.commit('showAlert', {msg: err, color: "error"})
@@ -94,8 +100,25 @@
       })
     }
 
+    private add() {
+      //
+    }
+
+    private update(id: string, data: VoiceData) {
+      db.collection('voices')
+        .doc(id)
+        .update(data)
+        .then(() => {
+          this.editDialog = false
+        })
+    }
+
+    private delete(id: string) {
+      //
+    }
+
     private showEditDialog(data: VoiceData) {
-      this.editData = data
+      this.editData = Object.assign({}, JSON.parse(JSON.stringify(data)))
       this.editDialog = true
     }
 
