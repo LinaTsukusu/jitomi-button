@@ -3,14 +3,13 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const state: {voiceData?: VoiceData} = {
-}
-
 export default new Vuex.Store({
-  state,
+  state: {
+    alertConfig: {}
+  },
   mutations: {
-    setVoiceData: (state, payload) => {
-      state.voiceData = payload
+    showAlert(state, alertConfig: {msg: string; color: string}) {
+      state.alertConfig = alertConfig
     }
   },
   actions: {

@@ -26,6 +26,8 @@
     v-content
       v-container(fluid)
         router-view
+    v-snackbar(v-model="showAlert" :color="alertColor" timeout="10000" top) {{alertMessage}}
+      v-btn(text @click="showAlert = false") close
 </template>
 
 <script lang="ts">
@@ -41,6 +43,10 @@
   })
   export default class App extends Vue {
     private menu = false
+    private showAlert = false
+
+    private alertColor = "info"
+    private alertMessage = ""
 
     private mounted() {
       const firebaseConfig = {
@@ -54,6 +60,15 @@
         measurementId: "G-23L1F4DPZ2"
       };
       firebase.initializeApp(firebaseConfig)
+
+      this.$store.subscribe((mutation, state) => {
+        if (mutation.type == 'showAlert') {
+          const alertConfig = state.alertConfig
+          this.alertColor = alertConfig.color
+          this.alertMessage = alertConfig.msg
+          this.showAlert = true
+        }
+      })
     }
   }
 </script>
