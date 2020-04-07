@@ -92,7 +92,7 @@
           if (snap.docs.length === 0) {
             this.data.index = 1
           } else {
-            this.data.index = snap.docs.slice(-1)[0].data().index + 1
+            this.data.index = Number(snap.docs.slice(-1)[0].data().index) + 1
           }
           if (!this.file) {
             throw 'ちゃんと入力しろ'
