@@ -7,7 +7,7 @@
           v-icon(left) mdi-launch
           span 元配信
       v-col.d-none.d-md-block(v-if ="this.voiceData")
-        v-chip.tag.ml-1.mb-1(v-for="row of this.voiceData.tags") {{row}}
+        v-chip.tag.ml-1.mb-1(v-for="row of this.voiceData.tags" @click="$emit('click-chip', row)") {{row}}
       v-col(v-else)
       v-col.text-center(align-self="center" md="1")
         v-btn(v-if="!isPlaying" @click="playVoice(voiceData)" fab x-large color="primary" :disabled="isBtnDisabled")
