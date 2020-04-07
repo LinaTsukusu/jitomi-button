@@ -116,7 +116,6 @@
         })
         .catch((err) => {
           this.isLoading = false
-          console.error(err)
           this.$store.commit('showAlert', {msg: err, color: "error"})
         })
       }

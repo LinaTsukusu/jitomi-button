@@ -1,29 +1,18 @@
-# jitomi-button
+# Jitomi Button
+> 磁富かわいいよ磁富
 
-## Project setup
-```
-yarn install
-```
+https://jitomi-button.web.app/
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+## これは何
+- VOMS所属 VTuber 磁富モノエさんの声が再生されるボタンのサイトです
+- 無駄にユーザビリティを良くしようと頑張った
 
-### Compiles and minifies for production
-```
-yarn build
-```
+## 使用技術
+- Node.js
+- TypeScript
+- Vue.js
+- Vuetify
+- Firebase
 
-### Run your unit tests
-```
-yarn test:unit
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## これは非公式
+- 注意されたら消えます
