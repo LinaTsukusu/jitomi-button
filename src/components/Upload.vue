@@ -64,7 +64,8 @@
 
 
     private add() {
-      if (this.$refs.form.validate()) {
+      const form = this.$refs.form as unknown as {validate: () => boolean}
+      if (form.validate()) {
         this.isLoading = true
         const db = firebase.firestore()
         const storage = firebase.storage()
@@ -132,7 +133,8 @@
     }
 
     private close() {
-      this.$refs.form.reset()
+      const form = this.$refs.form as unknown as {reset: () => boolean}
+      form.reset()
       this.$emit('close')
     }
   }
