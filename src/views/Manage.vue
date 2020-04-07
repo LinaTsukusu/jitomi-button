@@ -29,7 +29,7 @@
     v-btn#add-button(@click="addDialog = true" fixed bottom fab right x-large color="primary")
       v-icon mdi-plus
     v-dialog(v-model="addDialog" max-width="1200")
-      upload(@close="addDialog = false" @add="add")
+      upload(@close="addDialog = false" @play="playVoice")
     v-dialog(v-model="editDialog" max-width="1200")
       edit(:value="editData"  @close="editDialog = false" @play="playVoice" @update="update")
     v-dialog(v-model="loginDialog" persistent width="400")
@@ -98,10 +98,6 @@
             })
         }
       })
-    }
-
-    private add() {
-      //
     }
 
     private update(id: string, data: VoiceData) {
