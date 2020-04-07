@@ -6,6 +6,7 @@
     v-row
       v-col(offset-md="1" md="10")
         v-btn.ma-1(color="primary" v-for="d in voiceDataList" @click="playVoice(d)" v-if="isShow(d)") {{d.title}}
+          span(v-if="d.index > 1") {{d.index}}
     v-footer(absolute)
       player-footer(ref="player" @click-chip="searchTag")
 </template>
@@ -22,7 +23,6 @@
   })
   export default class Home extends Vue {
     private voiceDataList: VoiceData[] = []
-    private voiceData: VoiceData | null = null
     private search = ''
 
     private mounted() {
