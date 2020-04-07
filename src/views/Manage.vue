@@ -3,6 +3,7 @@
     v-row
       v-col(md="10" offset-md="1")
         v-data-table(
+          v-model="selected"
           :items="voiceDataList"
           :headers="headers"
           :search="search"
@@ -16,7 +17,7 @@
               v-spacer
               v-text-field(v-model="search" append-icon="mdi-magnify" label="Search" single-line clearable)
               v-spacer
-              v-btn(fab color="error")
+              v-btn(@click="showDeleteDialog" fab color="error")
                 v-icon mdi-delete
           template(v-slot:item.tags="{value}")
             v-chip.mr-1(v-for="tag in value" @click.stop="search = tag") {{tag}}
@@ -34,6 +35,14 @@
       edit(:value="editData"  @close="editDialog = false" @play="playVoice" @update="update")
     v-dialog(v-model="loginDialog" persistent width="400")
       login
+    v-dialog(v-model="deleteDialog" max-width="600")
+      v-card
+        v-card-title Delete
+        v-card-text 選択した音声を削除しますか?
+        v-card-actions
+          v-spacer
+          v-btn(@click="deleteDialog = false") Cancel
+          v-btn(@click="deleteVoice" color="error") Delete
 </template>
 
 <script lang="ts">
@@ -41,11 +50,13 @@
   import * as firebase from "firebase/app"
   import "firebase/firestore"
   import "firebase/auth"
+  import "firebase/storage"
   import Login from '@/components/Login.vue'
   import Edit from '@/components/Edit.vue'
   import Upload from '@/components/Upload.vue'
 
   const db = firebase.firestore()
+
   @Component({
     components: {Upload, Edit, Login},
   })
@@ -59,11 +70,13 @@
       {text: 'Archive', value: 'archiveUrl', width: "5%", align: 'center'},
     ]
 
+    private selected: (VoiceData & {id: string})[] = []
     private search = ""
     private isLoading = true
     private addDialog = false
     private editDialog = false
     private loginDialog = false
+    private deleteDialog = false
     private editData: VoiceData | null = null
 
     private mounted() {
@@ -109,8 +122,25 @@
         })
     }
 
-    private delete(id: string) {
-      //
+    private deleteVoice() {
+      const storage = firebase.storage()
+      this.selected.forEach((v) => {
+        storage.refFromURL(v.voiceUrl).delete()
+        .then(() => {
+          const id = v.id
+          delete v.id
+          return db.collection('voices').doc(id).delete()
+        }).then(() => {
+          this.$store.commit('showAlert', {msg: `${v.title}を削除しました`, color: 'success'})
+        })
+      })
+      this.deleteDialog = false
+    }
+
+    private showDeleteDialog() {
+      if (this.selected.length > 0) {
+        this.deleteDialog = true
+      }
     }
 
     private showEditDialog(data: VoiceData) {
